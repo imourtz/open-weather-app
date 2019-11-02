@@ -7,6 +7,8 @@ class Home extends React.Component {
         return (
             <div className="container">
                 <h1>Weather App</h1>
+                <Link to="/stats">Statistics</Link>
+
                 <p>Insert the city and counrty to see the forecasts</p>
                 <input type="text" value={this.props.city} placeholder="Please enter a city" onChange={this.props.cityName} />
                 <input type="text" value={this.props.country} placeholder="Please enter a country" onChange={this.props.countryName} />
@@ -44,7 +46,6 @@ class Home extends React.Component {
                         )
                     })}
                 </div>
-                <Link to="/stats">Statistics</Link>
             </div>
         )
     }

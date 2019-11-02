@@ -65,8 +65,8 @@ class App extends React.Component {
     this.setState({
       groupedForecasts: groupArrays
     })
-    console.log(this.state.groupedForecasts);
   }
+
   render() {
     return (
       <div>
@@ -79,10 +79,7 @@ class App extends React.Component {
             </ul>
 
             <Switch>
-              <Route path="/stats">
-                <Statistics groupedForecasts={this.state.groupedForecasts} />
-              </Route>
-              <Route path="/">
+              <Route exact path="/">
                 <Home 
                   cityName={this.cityName}
                   city={this.state.city}
@@ -90,7 +87,12 @@ class App extends React.Component {
                   countryName={this.countryName}
                   handleSubmit={this.handleSubmit}
                   groupedForecasts={this.state.groupedForecasts}
+                  
                 />
+              </Route>
+
+              <Route exact path="/stats">
+                <Statistics groupedForecasts={this.state.groupedForecasts} forecasts={this.state.forecasts}/>
               </Route>
             </Switch>
           </div>
