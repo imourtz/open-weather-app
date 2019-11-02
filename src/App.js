@@ -1,21 +1,26 @@
 import React from 'react';
 import axios from 'axios';
-// import { format, compareAsc } from 'date-fns'
-// import parse from 'date-fns/parse';
-// import toDate from 'date-fns/toDate';
 import { format } from 'date-fns';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Home from './components/Home';
+import Statistics from './components/Statistics';
 
 const { getCode } = require('country-list');
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       forecasts: [],
+      groupedForecasts: [],
       city: 'athens',
-      country: 'greece',
-      dates: []
+      country: 'greece'
     }
     this.cityName = this.cityName.bind(this);
     this.countryName = this.countryName.bind(this);
@@ -38,53 +43,58 @@ class App extends React.Component {
   }
 
   async handleSubmit(e) {
-    let dateArray = []
     e.preventDefault();
     const { data: weather } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city},${this.state.country}&appid=e39862b019a92f21bc77b2e6f1aad3eb&units=metric`)
     this.setState({
       forecasts: weather.list
     })
-
-    let formattedDate = this.state.dates;
-    this.state.forecasts.map((item, index) => {
-      // return dateArray.push(format(parseISO(item["dt_txt"]), 'dd/MM/yyyy'))
-      // const parsed = parse(item['dt'], 't', new Date());
-      const parsed = new Date(item['dt'] * 1000);
-      console.log(parsed) 
-      const formatted = format(parsed, 'EEEE dd/MM HH:mm')
-      formattedDate.push(formatted)
-      console.log(formatted) 
-      console.log('---------------') 
-    })
+    const groups = this.state.forecasts.reduce((groups, day) => {
+      const date = format(new Date(day['dt'] * 1000), 'EEEE dd/MM');
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(day);
+      return groups;
+    }, {});
+    const groupArrays = Object.keys(groups).map((date) => {
+      return {
+        date,
+        day: groups[date]
+      };
+    });
     this.setState({
-      dates: formattedDate
+      groupedForecasts: groupArrays
     })
-    console.log(this.state.forecasts)
-    console.log(this.state.dates)
+    console.log(this.state.groupedForecasts);
   }
-
   render() {
     return (
       <div>
-        <input type="text" value={this.state.city} placeholder="Please enter a city" onChange={this.cityName} />
-        <input type="text" value={this.state.country} placeholder="Please enter a country" onChange={this.countryName} />
-        <button type="submit" onClick={this.handleSubmit}>Search</button>
-        <div>
-          {this.state.forecasts.map((item, index) => {
-            // console.log(item)
-            // this.compareDates(item)
-            return (
-              <div key={index}>
-                {/* {parse(item["dt_txt"], 'MM/DD/YYYY', new Date())} */}
-                {/* {item["dt_txt"].split(" ",1)} */}
-                {/* <h3>{item["dt_txt"]}</h3> */}
-                {/* {format(parseISO(item["dt_txt"]), 'dd/MM/yyyy')} */}
-                <h3>{this.state.dates[index]}</h3>
-                <p>{item.main.temp}</p>
-              </div>
-            )
-          })}
-        </div>
+        <Router>
+          <div>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+            </ul>
+
+            <Switch>
+              <Route path="/stats">
+                <Statistics groupedForecasts={this.state.groupedForecasts} />
+              </Route>
+              <Route path="/">
+                <Home 
+                  cityName={this.cityName}
+                  city={this.state.city}
+                  country={this.state.country}
+                  countryName={this.countryName}
+                  handleSubmit={this.handleSubmit}
+                  groupedForecasts={this.state.groupedForecasts}
+                />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
       </div>
     )
   }
