@@ -66,7 +66,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.groupedForecasts);
     return (
       <div>
         <Router>

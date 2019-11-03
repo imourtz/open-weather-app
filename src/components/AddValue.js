@@ -20,7 +20,6 @@ class AddValue extends React.Component {
       <div className="input-group mb-3 text-center">
         <input
           type="number"
-          //   className="form-control"
           placeholder="temperature"
           onChange={this.handleChange}
           value={this.state.addedValue}

@@ -1,7 +1,8 @@
 import React from 'react';
 import { showMean } from '../utils/showMean';
 import AddValue from './AddValue';
-import { Link } from 'react-router-dom';
+import FoundStatusStatistics from './FoundStatusStatistics';
+import ModeForecast from './ModeForecast';
 
 class Statistics extends React.Component {
   constructor(props) {
@@ -73,37 +74,17 @@ class Statistics extends React.Component {
   render() {
     return (
       <div className="container">
-        {this.props.groupedForecasts.length !== 0 ? (
-          <h2 className="day-forecast text-center">
-            Statistics for {this.props.city.toUpperCase()}
-          </h2>
-        ) : (
-          <div className="not-found-section text-center">
-            <h2>No stats found!</h2>
-            <img
-              className="not-found-logo"
-              src="https://stubborn.fun/images/image-s-third-3.png"
-              alt="Logo"
-            />
-            <div>
-              <Link to="/">
-                <button className="btn btn-primary">Return to Home</button>
-              </Link>
-            </div>
-          </div>
-        )}
-        {this.props.forecasts.length > 0 && (
-          <div>
-            <h3 className="pl-5">
-              Mode Temperature(s) for the next five days:{' '}
-              {this.showMode(this.props.forecasts)}
-              {'\u00b0'}C
-            </h3>
-          </div>
-        )}
+        <FoundStatusStatistics
+          groupedForecasts={this.props.groupedForecasts}
+          city={this.props.city}
+        />
+        <ModeForecast
+          forecasts={this.props.forecasts}
+          showMode={this.showMode}
+        />
         {this.props.groupedForecasts.map((item, index) => {
           return (
-            <div className="my-3">
+            <div key={index} className="my-3">
               <div key={index} className="row day-forecast">
                 <div className="col-8">
                   <h2>{item.date}</h2>
