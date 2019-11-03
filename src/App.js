@@ -1,17 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Statistics from './components/Statistics';
 import Navigation from './components/Navigation';
 
 const { getCode } = require('country-list');
-
 
 class App extends React.Component {
   constructor(props) {
@@ -21,8 +16,8 @@ class App extends React.Component {
       groupedForecasts: [],
       city: '',
       country: '',
-      notFound: false
-    }
+      notFound: false,
+    };
     this.cityName = this.cityName.bind(this);
     this.countryName = this.countryName.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,28 +26,31 @@ class App extends React.Component {
   cityName(e) {
     e.preventDefault();
     this.setState({
-      city: e.target.value
-    })
+      groupedForecasts: [],
+      city: e.target.value,
+    });
   }
 
   countryName(e) {
     e.preventDefault();
-    const countryCode = getCode(e.target.value)
+    const countryCode = getCode(e.target.value);
     this.setState({
       groupedForecasts: [],
-      country: countryCode
-    })
+      country: countryCode,
+    });
   }
 
   async handleSubmit(e) {
     e.preventDefault();
     try {
-      const { data: weather } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city},${this.state.country}&appid=e39862b019a92f21bc77b2e6f1aad3eb&units=metric`)
-  
+      const { data: weather } = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city},${this.state.country}&appid=e39862b019a92f21bc77b2e6f1aad3eb&units=metric`
+      );
+
       this.setState({
-        forecasts: weather.list
-      })
-      
+        forecasts: weather.list,
+      });
+
       const groups = this.state.forecasts.reduce((groups, day) => {
         const date = format(new Date(day['dt'] * 1000), 'EEEE dd/MM');
         if (!groups[date]) {
@@ -61,26 +59,27 @@ class App extends React.Component {
         groups[date].push(day);
         return groups;
       }, {});
-  
-      const groupArrays = Object.keys(groups).map((date) => {
+
+      const groupArrays = Object.keys(groups).map(date => {
         return {
           date,
-          day: groups[date]
+          day: groups[date],
         };
       });
-  
+
       this.setState({
         groupedForecasts: groupArrays,
-        notFound: false
-      })
-    } catch(error) {
-        this.setState({
-          notFound: true
-        })
+        notFound: false,
+      });
+    } catch (error) {
+      this.setState({
+        notFound: true,
+      });
     }
   }
 
   render() {
+    console.log(this.state.groupedForecasts);
     return (
       <div>
         <Router>
@@ -89,8 +88,7 @@ class App extends React.Component {
 
             <Switch>
               <Route exact path="/">
-              
-                <Home 
+                <Home
                   cityName={this.cityName}
                   city={this.state.city}
                   country={this.state.country}
@@ -102,13 +100,17 @@ class App extends React.Component {
               </Route>
 
               <Route exact path="/stats">
-                <Statistics groupedForecasts={this.state.groupedForecasts} forecasts={this.state.forecasts}/>
+                <Statistics
+                  groupedForecasts={this.state.groupedForecasts}
+                  forecasts={this.state.forecasts}
+                  city={this.state.city}
+                />
               </Route>
             </Switch>
           </div>
         </Router>
       </div>
-    )
+    );
   }
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function Logo() {
   return (
@@ -31,7 +31,7 @@ function Logo() {
           opacity="1"
           overflow="visible"
           transform="translate(-33.174 -25.545) translate(-410.442 -6.979) matrix(.46778 0 0 .46778 349.688 17.168)"
-          style={{ marker: "none" }}
+          style={{ marker: 'none' }}
         ></path>
         <path
           fill="#fff"
@@ -44,7 +44,7 @@ function Logo() {
           opacity="1"
           overflow="visible"
           transform="translate(-33.174 -25.545) translate(-410.442 -6.979) matrix(.45842 0 0 .41032 407.325 25.303)"
-          style={{ marker: "none" }}
+          style={{ marker: 'none' }}
         ></path>
         <path
           fill="#fff"
@@ -57,7 +57,7 @@ function Logo() {
           opacity="1"
           overflow="visible"
           transform="translate(-33.174 -25.545) translate(-410.442 -6.979)"
-          style={{ marker: "none" }}
+          style={{ marker: 'none' }}
         ></path>
         <path
           fill="#386195"
@@ -70,7 +70,7 @@ function Logo() {
           opacity="1"
           overflow="visible"
           transform="translate(-33.174 -25.545) translate(-410.442 -6.979)"
-          style={{ marker: "none" }}
+          style={{ marker: 'none' }}
         ></path>
       </g>
     </svg>
