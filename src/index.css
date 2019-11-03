@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -11,3 +13,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.navbar-brand {
+  font-family: 'Pacifico', cursive;
+}
+
+.welcome-section {
+  padding: 3rem;
+}
+
+.not-found-logo {
+  width: 100px;
+  height: auto;
+  margin: 10px 0 20px;
+}
+
+.not-found-section {
+  padding: 3rem;
+}
+
+.day-forecast {
+  padding: 3rem;
+}
+
+.stats-link-button {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+/* .resulted-forecasts-section {
+  background-color: #16516d;
+  color: white;
+} */
