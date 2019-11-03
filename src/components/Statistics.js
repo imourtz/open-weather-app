@@ -1,4 +1,5 @@
 import React from 'react';
+import {showMean} from '../utils/showMean';
 
 class Statistics extends React.Component {
     constructor(props) {
@@ -10,34 +11,17 @@ class Statistics extends React.Component {
     }
 
     showMin = (array) => {
-        let min = array[0].main["temp_min"];
-        array.map((item, index) => {
-            if (item.main["temp_min"]<min) {
-                min = item.main["temp_min"]
-            }
-            return min;
-        })
-        return min;
+        const allForecasts = array.map((item) => item.main.temp);
+        return Math.min.apply(null, allForecasts);
     }
     
     showMax = (array) => {
-        let max = array[0].main["temp_max"];
-        array.map((item, index) => {
-            if (item.main["temp_max"]>max) {
-                max = item.main["temp_max"]
-            }
-            return max;
-        })
-        return max;
+        const allForecasts = array.map((item) => item.main.temp);
+        return Math.max.apply(null, allForecasts);    
     }
 
     showMean = (array) => {
-        let sum = 0;
-        array.map((item, index) => {
-            sum += item.main.temp
-            return sum;
-        })
-        return sum/array.length;
+        return showMean(array)
     }
 
     showMode = () => {
@@ -56,13 +40,14 @@ class Statistics extends React.Component {
                 }
             }
          
-            for (i in count)
+            for (i in count) {
                 if (count.hasOwnProperty(i)) {
                     if (count[i] === maxIndex) {
                         modes.push(Number(i));
                     }
                 }
-            return modes;
+            }
+            return modes.join(`${'\u00b0'}C and `);
     }
 
     handleChange = (e) => {
@@ -86,26 +71,28 @@ class Statistics extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 {this.props.groupedForecasts.map((item, index) => {
                     return (
-                        <div key={index}>
-                            <h1>{item.date}</h1>
+                        <div key={index} className="row day-forecast">
+                            <div className="col">
+                                <h1>{item.date}</h1>
+                                <p className="lead">Insert temperature: </p>
                                 <input type="number" onChange={this.handleChange} />
-                                <button onClick={this.handleSubmit.bind(this,index)}>ADD</button>
-                            <h3>Min Temperature: {(this.showMin(item.day))}{'\u00b0'}C</h3>
-                            <h3>Max Temperature: {(this.showMax(item.day))}{'\u00b0'}C</h3>
-                            <h3>Mean Temperature: {Math.round(this.showMean(item.day))}{'\u00b0'}C</h3>
+                                <button disabled={this.state.addedValue.length === 0} onClick={this.handleSubmit.bind(this,index)}>ADD</button>
+                            </div>
+                            <div className="col">
+                                <h3>Min Temperature: {(this.showMin(item.day))}{'\u00b0'}C</h3>
+                                <h3>Max Temperature: {(this.showMax(item.day))}{'\u00b0'}C</h3>
+                                <h3>Mean Temperature: {Math.round(this.showMean(item.day))}{'\u00b0'}C</h3>
+                            </div>
                         </div>
                     )
                 })}
 
                 {this.props.forecasts.length > 0 && (
                     <div>
-                        <h1>Minimum Temperature for the next five days: {Math.round(this.showMin(this.props.forecasts))}{'\u00b0'}C</h1>
-                        <h1>Maximum Temperature for the next five days: {Math.round(this.showMax(this.props.forecasts))}{'\u00b0'}C</h1>
-                        <h1>Mean Temperature for the next five days: {Math.round(this.showMean(this.props.forecasts))}{'\u00b0'}C</h1>
-                        <h1>Mode (most common) Temperature for the next five days: {this.showMode(this.props.forecasts)}{'\u00b0'}C</h1>
+                        <h3>Mode Temperature(s) for the next five days: {this.showMode(this.props.forecasts)}{'\u00b0'}C</h3>
                     </div>
                 )}
             </div>
