@@ -17,12 +17,12 @@ class Statistics extends React.Component {
 
   showMin = array => {
     const allForecasts = array.map(item => item.main.temp);
-    return Math.min.apply(null, allForecasts);
+    return Math.round(Math.min.apply(null, allForecasts));
   };
 
   showMax = array => {
     const allForecasts = array.map(item => item.main.temp);
-    return Math.max.apply(null, allForecasts);
+    return Math.round(Math.max.apply(null, allForecasts));
   };
 
   showMean = array => {
@@ -74,53 +74,70 @@ class Statistics extends React.Component {
     return (
       <div className="container">
         {this.props.groupedForecasts.length !== 0 ? (
-          <h2 className="day-forecast">
+          <h2 className="day-forecast text-center">
             Statistics for {this.props.city.toUpperCase()}
           </h2>
         ) : (
-          <div className="stats-link-button">
+          <div className="not-found-section text-center">
             <h2>No stats found!</h2>
-            <Link to="/">
-              <button className="btn btn-primary">Return to Home</button>
-            </Link>
+            <img
+              className="not-found-logo"
+              src="https://stubborn.fun/images/image-s-third-3.png"
+              alt="Logo"
+            />
+            <div>
+              <Link to="/">
+                <button className="btn btn-primary">Return to Home</button>
+              </Link>
+            </div>
           </div>
         )}
-        {this.props.groupedForecasts.map((item, index) => {
-          return (
-            <div key={index} className="row day-forecast">
-              <div className="col">
-                <h1>{item.date}</h1>
-                <AddValue
-                  handleSubmit={value => this.handleSubmit(value, index)}
-                />
-              </div>
-              <div className="col">
-                <h3>
-                  Min Temperature: {this.showMin(item.day)}
-                  {'\u00b0'}C
-                </h3>
-                <h3>
-                  Max Temperature: {this.showMax(item.day)}
-                  {'\u00b0'}C
-                </h3>
-                <h3>
-                  Mean Temperature: {Math.round(this.showMean(item.day))}
-                  {'\u00b0'}C
-                </h3>
-              </div>
-            </div>
-          );
-        })}
-
         {this.props.forecasts.length > 0 && (
           <div>
-            <h3>
+            <h3 className="pl-5">
               Mode Temperature(s) for the next five days:{' '}
               {this.showMode(this.props.forecasts)}
               {'\u00b0'}C
             </h3>
           </div>
         )}
+        {this.props.groupedForecasts.map((item, index) => {
+          return (
+            <div className="my-3">
+              <div key={index} className="row day-forecast">
+                <div className="col-8">
+                  <h2>{item.date}</h2>
+                </div>
+                <div className="col-4">
+                  <AddValue
+                    handleSubmit={value => this.handleSubmit(value, index)}
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-center">
+                <div className="mx-5">
+                  <h2 className="display-5 text-center">
+                    {this.showMin(item.day)} {'\u00b0'}C
+                  </h2>
+                  <h3 className="text-center">Min</h3>
+                </div>
+                <div className="mx-5">
+                  <h2 className="display-5 text-center">
+                    {Math.round(this.showMean(item.day))} {'\u00b0'}C
+                  </h2>
+                  <h3 className="text-center">Mean</h3>
+                </div>
+                <div className="mx-5">
+                  <h2 className="display-5 text-center">
+                    {this.showMax(item.day)} {'\u00b0'}C
+                  </h2>
+                  <h3 className="text-center">Max</h3>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
