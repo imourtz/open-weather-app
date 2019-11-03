@@ -6,8 +6,6 @@ import Home from './components/Home';
 import Statistics from './components/Statistics';
 import Navigation from './components/Navigation';
 
-const { getCode } = require('country-list');
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -15,11 +13,9 @@ class App extends React.Component {
       forecasts: [],
       groupedForecasts: [],
       city: '',
-      country: '',
       notFound: false,
     };
     this.cityName = this.cityName.bind(this);
-    this.countryName = this.countryName.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -31,20 +27,11 @@ class App extends React.Component {
     });
   }
 
-  countryName(e) {
-    e.preventDefault();
-    const countryCode = getCode(e.target.value);
-    this.setState({
-      groupedForecasts: [],
-      country: countryCode,
-    });
-  }
-
   async handleSubmit(e) {
     e.preventDefault();
     try {
       const { data: weather } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city},${this.state.country}&appid=e39862b019a92f21bc77b2e6f1aad3eb&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city}&appid=e39862b019a92f21bc77b2e6f1aad3eb&units=metric`
       );
 
       this.setState({
@@ -91,8 +78,6 @@ class App extends React.Component {
                 <Home
                   cityName={this.cityName}
                   city={this.state.city}
-                  country={this.state.country}
-                  countryName={this.countryName}
                   handleSubmit={this.handleSubmit}
                   groupedForecasts={this.state.groupedForecasts}
                   notFound={this.state.notFound}

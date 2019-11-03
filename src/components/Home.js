@@ -53,9 +53,7 @@ class Home extends React.Component {
       <div className="container">
         <Welcome
           city={this.props.city}
-          country={this.props.country}
           cityName={this.props.cityName}
-          countryName={this.props.countryName}
           handleSubmit={this.props.handleSubmit}
         />
 
@@ -67,7 +65,7 @@ class Home extends React.Component {
               src="https://stubborn.fun/images/image-s-third-2.png"
               alt="not-fount logo"
             />
-            <h3>Oops! No results for your search! Check your city/country.</h3>
+            <h3>Oops! No results for your search! Check the inserted city.</h3>
           </div>
         ) : (
           <div className="resulted-forecasts-section">
@@ -97,7 +95,7 @@ class Home extends React.Component {
               );
             })}
             {this.props.groupedForecasts.length > 0 ? (
-              <div className="stats-link-button">
+              <div className="stats-link-button text-center">
                 <Link to="/stats">
                   <button className="btn btn-primary">See Statistics</button>
                 </Link>

@@ -12,7 +12,7 @@ class Welcome extends React.Component {
           </p>
           <Logo />
         </div>
-        <p className="lead">Insert the city and counrty to see the forecasts</p>
+        <p className="lead">Insert the city to see the forecasts</p>
         <form className="form-inline d-flex justify-content-center">
           <label className="sr-only" htmlFor="inlineFormCity">
             City
@@ -25,16 +25,6 @@ class Welcome extends React.Component {
             placeholder="City"
             onChange={this.props.cityName}
             required
-          />
-          <label className="sr-only" htmlFor="inlineFormCountry">
-            Country
-          </label>
-          <input
-            type="text"
-            className="form-control mb-2 mr-sm-2"
-            id="inlineFormCountry"
-            placeholder="Country"
-            onChange={this.props.countryName}
           />
           <button
             type="submit"

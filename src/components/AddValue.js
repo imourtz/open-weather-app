@@ -17,10 +17,10 @@ class AddValue extends React.Component {
 
   render() {
     return (
-      <div className="input-group mb-3">
+      <div className="input-group mb-3 text-center">
         <input
           type="number"
-          className="form-control"
+          //   className="form-control"
           placeholder="temperature"
           onChange={this.handleChange}
           value={this.state.addedValue}
