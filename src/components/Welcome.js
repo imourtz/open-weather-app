@@ -12,7 +12,7 @@ class Welcome extends React.Component {
           </p>
           <Logo />
         </div>
-        <p className="lead">Insert the city to see the forecasts</p>
+        <p className="lead">Insert the name of the city to see the forecasts</p>
         <form className="form-inline d-flex justify-content-center">
           <label className="sr-only" htmlFor="inlineFormCity">
             City
