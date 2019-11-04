@@ -75,7 +75,6 @@ class Statistics extends React.Component {
   }
 
   render() {
-    console.log(this.state.updatedForecasts);
     return (
       <div className="container">
         <FoundStatusStatistics
