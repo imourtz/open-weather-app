@@ -58,6 +58,11 @@ class App extends React.Component {
         groupedForecasts: groupArrays,
         notFound: false,
       });
+      if (parseInt(this.state.city)) {
+        this.setState({
+          notFound: true,
+        });
+      }
     } catch (error) {
       this.setState({
         notFound: true,
