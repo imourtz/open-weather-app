@@ -64,7 +64,10 @@ class Statistics extends React.Component {
     const temp = parseFloat(value);
     const newForecasts = [...this.state.updatedForecasts];
     const updatedForecasts = [...this.state.updatedForecasts[index].day];
-    updatedForecasts.push({ main: { temp, temp_min: temp, temp_max: temp } });
+    updatedForecasts.push({
+      main: { temp, temp_min: temp, temp_max: temp },
+      dt: 1572912000,
+    });
     newForecasts[index].day = updatedForecasts;
     this.setState({
       updatedForecasts: newForecasts,
@@ -72,6 +75,7 @@ class Statistics extends React.Component {
   }
 
   render() {
+    console.log(this.state.updatedForecasts);
     return (
       <div className="container">
         <FoundStatusStatistics

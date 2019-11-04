@@ -15,7 +15,8 @@ class Home extends React.Component {
   morningTemp = array => {
     const morningTemps = [];
     array.map(item => {
-      if (format(new Date(item['dt'] * 1000), 'HH:mm') <= '12:00') {
+      const date = format(new Date(item['dt'] * 1000), 'HH:mm');
+      if (date <= '12:00') {
         morningTemps.push(item.main.temp);
       }
       return morningTemps;
@@ -33,7 +34,8 @@ class Home extends React.Component {
   nightTemp = array => {
     const nightTemps = [];
     array.map(item => {
-      if (format(new Date(item['dt'] * 1000), 'HH:mm') >= '18:00') {
+      const date = format(new Date(item['dt'] * 1000), 'HH:mm');
+      if (date >= '18:00') {
         nightTemps.push(item.main.temp);
       }
       return nightTemps;
