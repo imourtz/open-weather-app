@@ -12,11 +12,7 @@ class FoundStatusStatistics extends React.Component {
         ) : (
           <div className="not-found-section text-center">
             <h2>No stats found!</h2>
-            <img
-              className="not-found-logo"
-              src="https://stubborn.fun/images/image-s-third-3.png"
-              alt="Logo"
-            />
+
             <div>
               <Link to="/">
                 <button className="btn btn-primary">Return to Home</button>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
 import Welcome from '../components/Welcome';
-
 import DayForecasts from './DayForecasts';
 
 class Home extends React.Component {
